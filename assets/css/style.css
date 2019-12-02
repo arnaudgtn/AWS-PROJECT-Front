@@ -1,0 +1,16 @@
+.container {
+    max-width: 50%;
+    margin-right: auto;
+    margin-left: auto;
+    position: relative;
+    margin-top: 5em;
+}
+
+.add-btn {
+    position: absolute;
+    top: 1em;
+    right: 0;
+    width: 30px;
+    cursor: pointer;
+}
+
