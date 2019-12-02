@@ -1,58 +1,57 @@
 var ViewModel = null;
 
-var viewModel = function () {
+var viewModel = function() {
     var self = this;
 
     self.users = ko.observableArray([]);
 
-    self.name = ko.observable('');
-    self.age = ko.observable('');
+    self.name = ko.observable("");
+    self.age = ko.observable("");
     self.gender = ko.observable(0);
-    self.job = ko.observable('');
+    self.job = ko.observable("");
 
     self.displayAddForm = ko.observable(false);
 
-    self.canSend = ko.computed(function () {
-        return self.name() != '' && self.job() != '' && self.age() != '';
+    self.canSend = ko.computed(function() {
+        return self.name() != "" && self.job() != "" && self.age() != "";
     }, self);
 
-    self.showAddForm = function () {
+    self.showAddForm = function() {
         self.displayAddForm(true);
     };
-    self.hideAddForm = function () {
+    self.hideAddForm = function() {
         self.displayAddForm(false);
     };
 
-    self.clearForm = function () {
-        self.name('');
-        self.age('');
+    self.clearForm = function() {
+        self.name("");
+        self.age("");
         self.gender(0);
-        self.job('');
+        self.job("");
     };
 
-    self.reloadData = function () {
-
+    self.reloadData = function() {
         var users = [
             {
                 Id: 1,
-                Name: 'Issarni',
-                Age: '50',
+                Name: "Issarni Théo",
+                Age: "50",
                 Gender: 0,
-                Job: 'Dev'
+                Job: "Dev"
             },
             {
                 Id: 2,
-                Name: 'Guillotin',
-                Age: '23',
+                Name: "Guillotin Arnaud",
+                Age: "23",
                 Gender: 0,
-                Job: 'Dev'
+                Job: "Dev"
             },
             {
                 Id: 3,
-                Name: 'Clara',
-                Age: '26',
+                Name: "Martin Clara",
+                Age: "26",
                 Gender: 1,
-                Job: 'Teacher'
+                Job: "Teacher"
             }
         ];
 
@@ -65,22 +64,25 @@ var viewModel = function () {
         // });
     };
 
-    self.sendAddForm = function () {
+    self.sendAddForm = function() {
         if (!self.canSend()) {
             return;
         }
 
         var model = {
-            Name: self.name(),
-            Age: self.age(),
-            Gender: self.gender(),
-            Job: self.job()
+            Name: ko.observable(self.name()),
+            Age: ko.observable(self.age()),
+            Gender: ko.observable(self.gender()),
+            Job: ko.observable(self.job())
         };
 
-        model.Id = 1;
+        model.Id = ko.observable(self.users().length !== 0 ? self.users()[self.users().length - 1].Id() + 1 : 1);
+
         self.users.push(model);
+        toastr.success("User has been added to the list.");
 
         self.clearForm();
+        self.hideAddForm();
 
         // $.ajax({
         //     type: "POST",
@@ -97,13 +99,15 @@ var viewModel = function () {
         // });
     };
 
-    self.removeUser = function (data) {
+    self.removeUser = function(data) {
         var id = data.Id();
 
         self.users.remove(function(user) {
             return user.Id() == id;
         });
 
+        toastr.success("User has been removed from the list.");
+
         // $.ajax({
         //     type: "POST",
         //     url: "",
@@ -118,12 +122,10 @@ var viewModel = function () {
         //     data: model
         // });
 
-        if (self.users().length === 0)
-            self.showAddForm();
+        if (self.users().length === 0) self.showAddForm();
     };
 
     self.reloadData();
 
     ViewModel = self;
 };
-

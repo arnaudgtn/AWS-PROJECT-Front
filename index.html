@@ -1,46 +1,61 @@
 <!DOCTYPE html>
 <html>
-<title>User list - AWS Project</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="assets/css/style.css">
-<body>
-  <div class="container">
-      <h2>User list</h2>
-      <img class="add-btn" src="assets/images/plus.png" data-bind="click: showAddForm">
+    <title>User list - AWS Project</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+    <link rel="stylesheet" href="assets/css/toastr.min.css" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <body>
+        <div class="container">
+            <h2>User list</h2>
+            <img class="add-btn" src="assets/images/plus.png" data-bind="click: showAddForm" />
 
-      <ul class="w3-ul w3-card-4" data-bind="foreach: users, visible: !displayAddForm()">
-        <li class="w3-bar">
-          <span class="w3-bar-item w3-button w3-white w3-xlarge w3-right" data-bind="click: $root.removeUser">×</span>
-          <img class="w3-bar-item w3-circle w3-hide-small" style="width:85px" data-bind="attr: {src: Gender() == 0 ? 'assets/images/male.png' : 'assets/images/female.png'}">
-          <div class="w3-bar-item">
-            <span class="w3-large" data-bind="text: Name"></span>
-            <span class="w3-large"> - </span>
-            <span class="w3-large" data-bind="text: Age"></span>
-            <span class="w3-large"> ans</span><br>
-            <span data-bind="text: Job"></span>
-          </div>
-        </li>
-      </ul>
+            <ul class="w3-ul w3-card-4" data-bind="foreach: users, visible: !displayAddForm()">
+                <li class="w3-bar">
+                    <span class="w3-bar-item w3-button w3-white w3-xlarge w3-right" data-bind="click: $root.removeUser">×</span>
+                    <img
+                        class="w3-bar-item w3-circle w3-hide-small"
+                        style="width:85px"
+                        data-bind="attr: {src: Gender() == 0 ? 'assets/images/male.png' : 'assets/images/female.png'}"
+                    />
+                    <div class="w3-bar-item">
+                        <span class="w3-large" data-bind="text: Name"></span>
+                        <span class="w3-large"> - </span>
+                        <span class="w3-large" data-bind="text: Age"></span>
+                        <span class="w3-large"> ans</span><br />
+                        <span data-bind="text: Job"></span>
+                    </div>
+                </li>
+            </ul>
 
-      <div data-bind="visible: displayAddForm()">
-        <input class="form-control" type="text" data-bind="value: name" />
-        <input class="form-control type="text" data-bind="value: age" />
-        <select class="form-control data-bind="value: gender">
-          <option value="0">Male</option>
-          <option value="1">Female</option>
-        </select>
-        <input class="form-control type="text" data-bind="value: job" />
+            <div data-bind="visible: displayAddForm()" style="display: none">
+                <label for="name">Name</label>
+                <input id="name" type="text" data-bind="value: name" />
 
-        <span class="btn btn-success" data-bind="click: sendAddForm">Validate</span>
-      </div>
-  </div>
-  <script type='text/javascript' src='assets/js/jquery-3.4.1.min.js'></script>
-  <script type='text/javascript' src='assets/js/knockout-3.5.1.js'></script>
-  <script type='text/javascript' src='assets/js/knockout.mapping-latest.js'></script>
-  <script type='text/javascript' src='assets/js/vm.js'></script>
-  <script>
-    ko.applyBindings(new viewModel());
-  </script>
-</body>
+                <label for="age">Age</label>
+                <input id="age" type="text" data-bind="value: age" />
+
+                <label for="gender">Gender</label>
+                <select id="gender" data-bind="value: gender">
+                    <option value="0">Male</option>
+                    <option value="1">Female</option>
+                </select>
+
+                <label for="job">Job</label>
+                <input id="job" type="text" data-bind="value: job" />
+
+                <div class="text-center space-up">
+                    <span class="btn" data-bind="click: sendAddForm">Validate</span>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript" src="assets/js/jquery-3.4.1.min.js"></script>
+        <script type="text/javascript" src="assets/js/knockout-3.5.1.js"></script>
+        <script type="text/javascript" src="assets/js/knockout.mapping-latest.js"></script>
+        <script type="text/javascript" src="assets/js/toastr.min.js"></script>
+        <script type="text/javascript" src="assets/js/vm.js"></script>
+        <script>
+            ko.applyBindings(new viewModel());
+        </script>
+    </body>
 </html>
