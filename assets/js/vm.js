@@ -31,37 +31,36 @@ var viewModel = function() {
     };
 
     self.reloadData = function() {
-        var users = [
-            {
-                Id: 1,
-                Name: "Issarni Théo",
-                Age: "50",
-                Gender: 0,
-                Job: "Dev"
-            },
-            {
-                Id: 2,
-                Name: "Guillotin Arnaud",
-                Age: "23",
-                Gender: 0,
-                Job: "Dev"
-            },
-            {
-                Id: 3,
-                Name: "Martin Clara",
-                Age: "26",
-                Gender: 1,
-                Job: "Teacher"
+        $.get(API_URL + '/users', function (data) {
+            if (data != null) {
+                ko.mapping.fromJS(data, {}, self.users);
+            } else {
+                var users = [
+                    {
+                        Id: 1,
+                        Name: "Issarni Théo",
+                        Age: "50",
+                        Gender: 0,
+                        Job: "Dev"
+                    },
+                    {
+                        Id: 2,
+                        Name: "Guillotin Arnaud",
+                        Age: "23",
+                        Gender: 0,
+                        Job: "Dev"
+                    },
+                    {
+                        Id: 3,
+                        Name: "Martin Clara",
+                        Age: "26",
+                        Gender: 1,
+                        Job: "Teacher"
+                    }
+                ];
+                ko.mapping.fromJS(users, {}, self.users);
             }
-        ];
-
-        ko.mapping.fromJS(users, {}, self.users);
-
-        // $.get('', function (data) {
-        //     if (data.Users != null) {
-        //         ko.mapping.fromJS(data.Users, {}, self.users);
-        //     }
-        // });
+        });
     };
 
     self.sendAddForm = function() {
@@ -84,19 +83,14 @@ var viewModel = function() {
         self.clearForm();
         self.hideAddForm();
 
-        // $.ajax({
-        //     type: "POST",
-        //     url: "",
-        //     success: function (data) {
-        //         if (data == "OK") {
-        //             window.location.href = '/Request';
-        //         } else {
-        //             //ERROR
-        //             //toastr.error('Une erreur est survenue au chargement des aides.', data);
-        //         }
-        //     },
-        //     data: model
-        // });
+        $.ajax({
+            type: "POST",
+            url: API_URL + '/user',
+            data: model,
+            success: function (data) {
+                self.reloadData();
+            }
+        });
     };
 
     self.removeUser = function(data) {
@@ -108,19 +102,13 @@ var viewModel = function() {
 
         toastr.success("User has been removed from the list.");
 
-        // $.ajax({
-        //     type: "POST",
-        //     url: "",
-        //     success: function (data) {
-        //         if (data == "OK") {
-        //             window.location.href = '/Request';
-        //         } else {
-        //             //ERROR
-        //             //toastr.error('Une erreur est survenue au chargement des aides.', data);
-        //         }
-        //     },
-        //     data: model
-        // });
+        $.ajax({
+            type: "DELETE",
+            url: API_URL + '/user/' + id,
+            success: function (data) {
+                self.reloadData();
+            }
+        });
 
         if (self.users().length === 0) self.showAddForm();
     };
