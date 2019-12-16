@@ -19,7 +19,7 @@
                         data-bind="attr: {src: Gender() == 0 ? 'assets/images/male.png' : 'assets/images/female.png'}"
                     />
                     <div class="w3-bar-item">
-                        <span class="w3-large" data-bind="text: Name"></span>
+                        <span class="w3-large" data-bind="text: UserName"></span>
                         <span class="w3-large"> - </span>
                         <span class="w3-large" data-bind="text: Age"></span>
                         <span class="w3-large"> ans</span><br />
@@ -29,8 +29,8 @@
             </ul>
 
             <div data-bind="visible: displayAddForm()" style="display: none">
-                <label for="name">Name</label>
-                <input id="name" type="text" data-bind="value: name" />
+                <label for="userName">Name</label>
+                <input id="userName" type="text" data-bind="value: userName" />
 
                 <label for="age">Age</label>
                 <input id="age" type="text" data-bind="value: age" />
@@ -53,10 +53,6 @@
         <script type="text/javascript" src="assets/js/knockout-3.5.1.js"></script>
         <script type="text/javascript" src="assets/js/knockout.mapping-latest.js"></script>
         <script type="text/javascript" src="assets/js/toastr.min.js"></script>
-        <script type="text/javascript" src="assets/js/vm.js"></script>
-        <script>
-            var API_URL = 'https://363x07rlag.execute-api.eu-west-3.amazonaws.com/dev';
-            ko.applyBindings(new viewModel());
-        </script>
+        <script type="text/javascript" src="dist/api_url.js"></script>
     </body>
 </html>

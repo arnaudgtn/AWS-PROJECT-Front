@@ -1,11 +1,12 @@
 var ViewModel = null;
+var API_URL = process.env.API_URL;
 
 var viewModel = function() {
     var self = this;
 
     self.users = ko.observableArray([]);
 
-    self.name = ko.observable("");
+    self.userName = ko.observable("");
     self.age = ko.observable("");
     self.gender = ko.observable(0);
     self.job = ko.observable("");
@@ -13,7 +14,7 @@ var viewModel = function() {
     self.displayAddForm = ko.observable(false);
 
     self.canSend = ko.computed(function() {
-        return self.name() != "" && self.job() != "" && self.age() != "";
+        return self.userName() != "" && self.job() != "" && self.age() != "";
     }, self);
 
     self.showAddForm = function() {
@@ -24,7 +25,7 @@ var viewModel = function() {
     };
 
     self.clearForm = function() {
-        self.name("");
+        self.userName("");
         self.age("");
         self.gender(0);
         self.job("");
@@ -34,31 +35,6 @@ var viewModel = function() {
         $.get(API_URL + '/users', function (data) {
             if (data != null) {
                 ko.mapping.fromJS(data, {}, self.users);
-            } else {
-                var users = [
-                    {
-                        Id: 1,
-                        Name: "Issarni Théo",
-                        Age: "50",
-                        Gender: 0,
-                        Job: "Dev"
-                    },
-                    {
-                        Id: 2,
-                        Name: "Guillotin Arnaud",
-                        Age: "23",
-                        Gender: 0,
-                        Job: "Dev"
-                    },
-                    {
-                        Id: 3,
-                        Name: "Martin Clara",
-                        Age: "26",
-                        Gender: 1,
-                        Job: "Teacher"
-                    }
-                ];
-                ko.mapping.fromJS(users, {}, self.users);
             }
         });
     };
@@ -69,7 +45,7 @@ var viewModel = function() {
         }
 
         var model = {
-            Name: ko.observable(self.name()),
+            UserName: ko.observable(self.userName()),
             Age: ko.observable(self.age()),
             Gender: ko.observable(self.gender()),
             Job: ko.observable(self.job())
@@ -115,5 +91,34 @@ var viewModel = function() {
 
     self.reloadData();
 
+    if (self.users().length === 0) {
+        var users = [
+            {
+                Id: 1,
+                UserName: "Issarni Théo",
+                Age: "50",
+                Gender: 0,
+                Job: "Dev"
+            },
+            {
+                Id: 2,
+                UserName: "Guillotin Arnaud",
+                Age: "23",
+                Gender: 0,
+                Job: "Dev"
+            },
+            {
+                Id: 3,
+                UserName: "Martin Clara",
+                Age: "26",
+                Gender: 1,
+                Job: "Teacher"
+            }
+        ];
+        ko.mapping.fromJS(users, {}, self.users);
+    }
+
     ViewModel = self;
 };
+
+ko.applyBindings(new viewModel());
