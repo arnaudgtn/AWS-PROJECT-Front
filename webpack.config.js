@@ -8,7 +8,7 @@ module.exports = {
     optimization: { minimize: false },
     entry: './assets/js/vm.js',
     output: {
-        filename: 'api_url.js',
+        filename: 'vm.js',
         path: path.resolve(__dirname, 'dist'),
     },
 };
