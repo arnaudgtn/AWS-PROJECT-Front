@@ -4,4 +4,4 @@ git clone https://github.com/arnaudguillotin/AWS-PROJECT-Front.git
 cd AWS-PROJECT-Front
 npm install webpack webpack-cli dotenv-webpack local-web-server
 ./node_modules/webpack/bin/webpack.js --env.ENVIRONMENT=production --config webpack.config.js
-ws
+./node_modules/local-web-server/bin/cli.js
