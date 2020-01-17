@@ -7,14 +7,14 @@ var viewModel = function() {
     self.users = ko.observableArray([]);
 
     self.userName = ko.observable("");
-    self.age = ko.observable("");
+    self.age = ko.observable(0);
     self.gender = ko.observable(0);
     self.job = ko.observable("");
 
     self.displayAddForm = ko.observable(false);
 
     self.canSend = ko.computed(function() {
-        return self.userName() != "" && self.job() != "" && self.age() != "";
+        return self.userName() != "" && self.job() != "";
     }, self);
 
     self.showAddForm = function() {
@@ -26,7 +26,7 @@ var viewModel = function() {
 
     self.clearForm = function() {
         self.userName("");
-        self.age("");
+        self.age(0);
         self.gender(0);
         self.job("");
     };
@@ -51,7 +51,7 @@ var viewModel = function() {
             Job: ko.observable(self.job())
         };
 
-        model.Id = ko.observable(self.users().length !== 0 ? self.users()[self.users().length - 1].Id() + 1 : 1);
+        model.id = ko.observable(self.users().length !== 0 ? self.users()[self.users().length - 1].id() + 1 : 1);
 
         self.users.push(model);
         toastr.success("User has been added to the list.");
@@ -70,10 +70,10 @@ var viewModel = function() {
     };
 
     self.removeUser = function(data) {
-        var id = data.Id();
+        var id = data.id();
 
         self.users.remove(function(user) {
-            return user.Id() == id;
+            return user.id() == id;
         });
 
         toastr.success("User has been removed from the list.");
@@ -94,23 +94,23 @@ var viewModel = function() {
     if (self.users().length === 0) {
         var users = [
             {
-                Id: 1,
+                id: 1,
                 UserName: "Issarni Théo",
-                Age: "50",
+                Age: 50,
                 Gender: 0,
                 Job: "Dev"
             },
             {
-                Id: 2,
+                id: 2,
                 UserName: "Guillotin Arnaud",
-                Age: "23",
+                Age: 23,
                 Gender: 0,
                 Job: "Dev"
             },
             {
-                Id: 3,
+                id: 3,
                 UserName: "Martin Clara",
-                Age: "26",
+                Age: 26,
                 Gender: 1,
                 Job: "Teacher"
             }
