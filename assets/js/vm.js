@@ -7,8 +7,8 @@ var viewModel = function() {
     self.users = ko.observableArray([]);
 
     self.userName = ko.observable("");
-    self.age = ko.observable(0);
-    self.gender = ko.observable(0);
+    self.age = ko.observable(1);
+    self.gender = ko.observable("0");
     self.job = ko.observable("");
 
     self.displayAddForm = ko.observable(false);
@@ -27,7 +27,7 @@ var viewModel = function() {
     self.clearForm = function() {
         self.userName("");
         self.age(0);
-        self.gender(0);
+        self.gender("0");
         self.job("");
     };
 
@@ -50,8 +50,7 @@ var viewModel = function() {
             Gender: ko.observable(self.gender()),
             Job: ko.observable(self.job())
         };
-
-        model.id = ko.observable(self.users().length !== 0 ? self.users()[self.users().length - 1].id() + 1 : 1);
+        var jsonData = JSON.stringify({UserName: self.userName(), Age: self.age(), Gender: self.gender(), Job: self.job()});
 
         self.users.push(model);
         toastr.success("User has been added to the list.");
@@ -62,8 +61,9 @@ var viewModel = function() {
         $.ajax({
             type: "POST",
             url: API_URL + '/user',
-            data: model,
+            data: jsonData,
             success: function (data) {
+                model.id = ko.observable(self.users().length !== 0 ? self.users()[self.users().length - 1].id() + 1 : 1);
                 self.reloadData();
             }
         });
@@ -97,21 +97,21 @@ var viewModel = function() {
                 id: 1,
                 UserName: "Issarni Théo",
                 Age: 50,
-                Gender: 0,
+                Gender: "0",
                 Job: "Dev"
             },
             {
                 id: 2,
                 UserName: "Guillotin Arnaud",
                 Age: 23,
-                Gender: 0,
+                Gender: "0",
                 Job: "Dev"
             },
             {
                 id: 3,
                 UserName: "Martin Clara",
                 Age: 26,
-                Gender: 1,
+                Gender: "1",
                 Job: "Teacher"
             }
         ];
